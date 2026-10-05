@@ -18,7 +18,8 @@ import java.util.List;
 public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long inventory_id;
+    @Column(name = "inventory_id")
+    private Long Id;
 
     @Column(nullable = true)
     private BigDecimal purchase_price;
@@ -47,9 +48,24 @@ public class Inventory {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    private boolean is_deleted = false;
-    public void deleteUser(boolean is_deleted){
-        this.is_deleted = is_deleted;
+    @Column(name = "is_deleted")
+    private boolean isDeleted = false;
+    public void delete(){
+        this.isDeleted = true;
+    }
+    public Inventory(Product product, int damaged_stock, int sellable_stock, BigDecimal purchase_price, BigDecimal selling_price) {
+        this.product = product;
+        this.damaged_stock = damaged_stock;
+        this.sellable_stock = sellable_stock;
+        this.purchase_price = purchase_price;
+        this.selling_price = selling_price;
+    }
+    public void UpdateInventory(Product product, int damaged_stock, int sellable_stock, BigDecimal purchase_price, BigDecimal selling_price) {
+        this.product = product;
+        this.damaged_stock = damaged_stock;
+        this.sellable_stock = sellable_stock;
+        this.purchase_price = purchase_price;
+        this.selling_price = selling_price;
     }
 
 }

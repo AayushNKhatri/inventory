@@ -16,7 +16,8 @@ import java.time.LocalDateTime;
 public class ProductAttributeValue {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long pav_id;
+    @Column(name = "pav_id")
+    private Long Id;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)

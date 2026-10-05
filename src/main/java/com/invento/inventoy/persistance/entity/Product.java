@@ -1,5 +1,6 @@
 package com.invento.inventoy.persistance.entity;
 
+import com.invento.inventoy.product.dto.ProductDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -18,15 +19,19 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long product_id;
+    @Column(name = "product_id")
+    private Long Id;
 
     @Column(nullable = false)
     private String product_name;
     @Column(columnDefinition = "TEXT")
     private String product_description;
     //Make new File Table for image store the metadata sku's, barcode
-    private boolean is_active = true;
-    private boolean is_deleted = false;
+
+    @Column(name = "is_active")
+    private boolean isActive = true;
+    @Column(name = "is_deleted")
+    private boolean isDeleted = false;
 
     @ManyToOne
     @JoinColumn(name = "product_type_id", nullable = false)
@@ -48,7 +53,20 @@ public class Product {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    public void deleteUser(boolean is_deleted){
-        this.is_deleted = is_deleted;
+    public void deleteProduct(){
+        this.isDeleted = true;
+    }
+    public void ChangeProductStatus(){
+        this.isActive = !this.isActive;
+    }
+    public Product(String name, String description, ProductType productType){
+        this.product_name = name;
+        this.product_description = description;
+        this.product_type = productType;
+    }
+    public void UpdateProduct(String name, String description){
+        this.product_name = name;
+        this.product_description = description;
+        this.product_type = new ProductType();
     }
 }
