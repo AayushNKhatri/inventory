@@ -25,10 +25,15 @@ public class Order {
     @Column(nullable = false)
     private String address;
 
+    @Column(name = "status")
     private String status;
-    private String payment_status;
-    @Column(nullable = false)
-    private BigDecimal total_amt;
+
+    @Column(name = "payment_status")
+    private String paymentStatus;
+
+    @Column(nullable = false, name = "total_amt")
+    private BigDecimal totalAmt;
+    @Column(name = "remark")
     private String remark;
     @OneToMany(mappedBy = "order")
     private List<OrderItem> order_item = new ArrayList<>();
@@ -40,9 +45,9 @@ public class Order {
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updatedAt;
-
-    private boolean is_deleted = false;
-    public void deleteUser(boolean is_deleted){
-        this.is_deleted = is_deleted;
+    @Column(name = "is_deleted")
+    private boolean isDeleted = false;
+    public void delete(){
+        this.isDeleted = true;
     }
 }

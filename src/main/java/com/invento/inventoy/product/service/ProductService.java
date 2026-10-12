@@ -23,12 +23,13 @@ public class ProductService {
     private final ProductTypeRepo productTypeRepo;
 
     @Transactional
-    public ApiResponse Create(ProductDto.CreateProduct createProduct){
+    public ApiResponse<Void> Create(ProductDto.CreateProduct createProduct){
         ProductType productType = productTypeRepo.findByIdAndIsDeletedFalse(createProduct.productTypeId()).orElseThrow(() -> new NoSuchElementException("Product Type Not Found"));
         Product product = new Product(
                 createProduct.name(),
                 createProduct.description(),
                 productType
+
         );
         productRepo.save(product);
         Inventory inventory = new Inventory(
@@ -40,5 +41,18 @@ public class ProductService {
         );
         inventoryRepo.save(inventory);
         return ApiResponse.success("Successfully added");
+    }
+
+    @Transactional
+    public ApiResponse<Void> Update(ProductDto.UpdateProduct updateProduct, Long Id){
+        Product product = productRepo.findById(Id).orElseThrow(() -> new NoSuchElementException("Product Not Found"));
+        Long InventoryId = product.getInventory().getId();
+        Inventory inventory = inventoryRepo.findByIdAndIsDeletedFalseAndIsActiveTrue(InventoryId);
+        ProductType productType = productTypeRepo.findByIdAndIsDeletedFalse(updateProduct.productTypeId()).orElseThrow(() -> new NoSuchElementException("Product Type Not Found"));
+        product.UpdateProduct(updateProduct.name(), updateProduct.description(), productType);
+        productRepo.save(product);
+        inventory.UpdateInventory(product, updateProduct.purchasePrice(), updateProduct.sellingPrice());
+        inventoryRepo.save(inventory);
+        return ApiResponse.success("Sucesfully updated");
     }
 }

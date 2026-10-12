@@ -1,0 +1,46 @@
+
+[
+  {
+    "label": "Spring Boot: Run",
+    "command": ".\\mvnw.cmd",
+    "args": [
+      "spring-boot:run"
+    ],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false
+  },
+
+  {
+    "label": "Spring Boot: Run from Java gutter",
+    "command": ".\\mvnw.cmd",
+    "args": [
+      "spring-boot:run"
+    ],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "tags": ["java-main"],
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false
+  },
+  {
+    "label": "Maven: Compile",
+    "command": ".\\mvnw.cmd",
+    "args": [
+      "-DskipTests",
+      "compile"
+    ],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false
+  },
+  {
+    "label": "Maven: Test",
+    "command": ".\\mvnw.cmd",
+    "args": [
+      "test"
+    ],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false
+  }
+]

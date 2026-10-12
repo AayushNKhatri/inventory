@@ -7,7 +7,6 @@ import com.invento.inventoy.config.JwtServices;
 import com.invento.inventoy.config.exeption.Response;
 import com.invento.inventoy.persistance.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -54,8 +53,7 @@ public class AuthServices {
                     passwordHash
             );
             userRepo.save(user);
-            Response.ApiResponse res = Response.ApiResponse.success("User Successfully Register");
-            return res;
+            return Response.ApiResponse.success("User Successfully Register");
 
     }
 }

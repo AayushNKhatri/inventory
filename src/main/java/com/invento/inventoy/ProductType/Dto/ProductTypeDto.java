@@ -1,8 +1,6 @@
 package com.invento.inventoy.ProductType.Dto;
 
 import com.invento.inventoy.AttributeDefination.dto.AttributeDefinitionDto;
-import com.invento.inventoy.persistance.entity.AttributeDefinition;
-
 import java.util.List;
 
 public class ProductTypeDto {

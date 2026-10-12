@@ -59,14 +59,14 @@ public class Product {
     public void ChangeProductStatus(){
         this.isActive = !this.isActive;
     }
-    public Product(String name, String description, ProductType productType){
+    public Product(String name, String description, ProductType productType) {
         this.product_name = name;
         this.product_description = description;
         this.product_type = productType;
     }
-    public void UpdateProduct(String name, String description){
+    public void UpdateProduct(String name, String description, ProductType productType) {
         this.product_name = name;
         this.product_description = description;
-        this.product_type = new ProductType();
+        this.product_type = productType;
     }
 }

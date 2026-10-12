@@ -4,7 +4,6 @@ import com.invento.inventoy.AttributeDefination.dto.AttributeDefinitionDto;
 import com.invento.inventoy.ProductType.Dto.ProductTypeDto;
 import com.invento.inventoy.ProductType.repo.ProductTypeRepo;
 import com.invento.inventoy.config.exeption.Response.ApiResponse;
-import com.invento.inventoy.persistance.entity.AttributeDefinition;
 import com.invento.inventoy.persistance.entity.ProductType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ import java.util.NoSuchElementException;
 public class ProductTypeService {
     private final ProductTypeRepo productTypeRepo;
 
-    public ApiResponse CreateProductType(ProductTypeDto.CreateProductTypeDto request){
+    public ApiResponse<Void> CreateProductType(ProductTypeDto.CreateProductTypeDto request){
         ProductType productType = new ProductType(
                 request.name(),
                 request.description()
@@ -27,14 +26,14 @@ public class ProductTypeService {
         return ApiResponse.success("Successfully added");
     }
     @Transactional
-    public ApiResponse UpdateProductType(ProductTypeDto.UpdateProductTypeDto request, Long id){
+    public ApiResponse<Void> UpdateProductType(ProductTypeDto.UpdateProductTypeDto request, Long id){
         ProductType productType = productTypeRepo.findByIdAndIsDeletedFalse(id).orElseThrow(() -> new NoSuchElementException("Product type with id: " + id + " does not exist"));
         productType.update(request.name(), request.description());
         return ApiResponse.success("Successfully updated");
     }
 
     @Transactional
-    public ApiResponse DeleteProductType(Long id){
+    public ApiResponse<Void> DeleteProductType(Long id){
         ProductType productType = productTypeRepo.findByIdAndIsDeletedFalse(id).orElseThrow(() -> new NoSuchElementException("Product with id : " + id + "does not exist"));
         productType.deleteProductType();
         return ApiResponse.success("Successfully deleted");
@@ -75,6 +74,3 @@ public class ProductTypeService {
     }
 
 }
-
-
-

@@ -60,10 +60,8 @@ public class Inventory {
         this.purchase_price = purchase_price;
         this.selling_price = selling_price;
     }
-    public void UpdateInventory(Product product, int damaged_stock, int sellable_stock, BigDecimal purchase_price, BigDecimal selling_price) {
+    public void UpdateInventory(Product product, BigDecimal purchase_price, BigDecimal selling_price) {
         this.product = product;
-        this.damaged_stock = damaged_stock;
-        this.sellable_stock = sellable_stock;
         this.purchase_price = purchase_price;
         this.selling_price = selling_price;
     }

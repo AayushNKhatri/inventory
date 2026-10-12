@@ -20,7 +20,7 @@ public class AttributeDefinitionService {
     private final AttributeDefinitionRepo attributeDefinitionRepo;
     private final ProductTypeRepo productTypeRepo;
 
-    public ApiResponse Create(AttributeDefinitionDto.CreateAttributeDefinitionDto dto, Long productTypeId){
+    public ApiResponse<Void> Create(AttributeDefinitionDto.CreateAttributeDefinitionDto dto, Long productTypeId){
         ProductType productType = productTypeRepo.findByIdAndIsDeletedFalse(productTypeId).orElseThrow(() ->  new NoSuchElementException("Product with id : " + productTypeId + "does not exist"));
         AttributeDefinition attributeDefinition = new AttributeDefinition(
                 dto.name(),
@@ -33,14 +33,14 @@ public class AttributeDefinitionService {
     }
 
     @Transactional
-    public ApiResponse Update(AttributeDefinitionDto.UpdateAttributeDefinitionDto dto, Long id){
+    public ApiResponse<Void> Update(AttributeDefinitionDto.UpdateAttributeDefinitionDto dto, Long id){
         AttributeDefinition attributeDefinition = attributeDefinitionRepo.findByIdAndIsDeletedFalse(id).orElseThrow(() -> new NoSuchElementException("Attribute definition with id " + id + " does not exist"));
         attributeDefinition.Update(dto.name(), dto.DataType(), dto.required());
         attributeDefinitionRepo.save(attributeDefinition);
         return ApiResponse.success("Successfully Updated");
     }
     @Transactional
-    public ApiResponse Delete(Long id){
+    public ApiResponse<Void> Delete(Long id){
         AttributeDefinition attributeDefinition = attributeDefinitionRepo.findByIdAndIsDeletedFalse(id).orElseThrow(() -> new NoSuchElementException("Attribute definition with id " + id + " does not exist"));
         attributeDefinition.deleteUser();
         return  ApiResponse.success("Successfully Deleted");

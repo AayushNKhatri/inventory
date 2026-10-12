@@ -17,7 +17,7 @@ public class UserController {
     private final UserServices userServices;
 
     @GetMapping("/detail")
-    public ResponseEntity<Response.ApiResponse> UserDetail (Authentication authentication){
+    public ResponseEntity<Response.ApiResponse<UserDetails>> UserDetail (Authentication authentication){
         UserDetails userDetails = userServices.loadUserByCurrentUser(authentication);
         Response.ApiResponse<UserDetails> res = Response.ApiResponse.success("Current user fetched", userDetails);
         return ResponseEntity.status(res.status()).body(res);
