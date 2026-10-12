@@ -6,12 +6,14 @@ import com.invento.inventoy.persistance.entity.Inventory;
 import com.invento.inventoy.persistance.entity.Product;
 import com.invento.inventoy.persistance.entity.ProductType;
 import com.invento.inventoy.product.dto.ProductDto;
+import com.invento.inventoy.product.mapper.ProductMapper;
 import com.invento.inventoy.product.repo.InventoryRepo;
 import com.invento.inventoy.product.repo.ProductRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -21,6 +23,7 @@ public class ProductService {
     private final ProductRepo productRepo;
     private final InventoryRepo inventoryRepo;
     private final ProductTypeRepo productTypeRepo;
+    private final ProductMapper productMapper;
 
     @Transactional
     public ApiResponse<Void> Create(ProductDto.CreateProduct createProduct){
@@ -47,12 +50,21 @@ public class ProductService {
     public ApiResponse<Void> Update(ProductDto.UpdateProduct updateProduct, Long Id){
         Product product = productRepo.findById(Id).orElseThrow(() -> new NoSuchElementException("Product Not Found"));
         Long InventoryId = product.getInventory().getId();
-        Inventory inventory = inventoryRepo.findByIdAndIsDeletedFalseAndIsActiveTrue(InventoryId);
+        Inventory inventory = inventoryRepo.findByIdAndIsDeletedFalse(InventoryId);
         ProductType productType = productTypeRepo.findByIdAndIsDeletedFalse(updateProduct.productTypeId()).orElseThrow(() -> new NoSuchElementException("Product Type Not Found"));
         product.UpdateProduct(updateProduct.name(), updateProduct.description(), productType);
         productRepo.save(product);
         inventory.UpdateInventory(product, updateProduct.purchasePrice(), updateProduct.sellingPrice());
         inventoryRepo.save(inventory);
         return ApiResponse.success("Sucesfully updated");
+    }
+
+    public ApiResponse<List<ProductDto.ViewProduct>> GetAllProduct(){
+        List<Product> product = productRepo.findAllByAndIsDeletedFalseAndIsActiveTrue();
+        return ApiResponse.success("Sucesfully Retrived", productMapper.toDtoList(product));
+    }
+    public ApiResponse<ProductDto.ViewProduct> GetProductById(Long Id){
+        Product product = productRepo.findByIdAndIsDeletedFalseAndIsActiveTrue(Id).orElseThrow(() -> new NoSuchElementException("No Such Product found"));
+        return ApiResponse.success("Sucesfully Retrived", productMapper.toDto(product));
     }
 }
