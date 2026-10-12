@@ -1,7 +1,6 @@
 package com.invento.inventoy.AttributeDefination.dto;
 
 import com.invento.inventoy.ProductType.Dto.ProductTypeDto;
-import com.invento.inventoy.persistance.entity.ProductType;
 
 public class AttributeDefinitionDto {
     public record CreateAttributeDefinitionDto(String name, String DataType, boolean required) {};

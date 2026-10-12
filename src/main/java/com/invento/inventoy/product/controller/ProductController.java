@@ -25,7 +25,7 @@ public class ProductController {
     }
     @PutMapping("/update")
     public ResponseEntity<Response.ApiResponse<Void>> Update(@RequestBody ProductDto.UpdateProduct updateProduct, @PathVariable Long ProductId){
-        Response.ApiResponse res = productService.Update(updateProduct, ProductId);
+        Response.ApiResponse<Void> res = productService.Update(updateProduct, ProductId);
         return ResponseEntity.status(res.status()).body(res);
     }
 }

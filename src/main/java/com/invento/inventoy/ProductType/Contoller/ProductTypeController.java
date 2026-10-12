@@ -47,7 +47,7 @@ public class ProductTypeController {
     }
     @GetMapping("/Get/{id}")
     public ResponseEntity<Response.ApiResponse<ReturnProductTypeDto>> Get(@PathVariable Long id){
-        Response.ApiResponse<ReturnProductTypeDto>  res = productTypeService.GetProductTypeById(id);
+        Response.ApiResponse<ReturnProductTypeDto> res = productTypeService.GetProductTypeById(id);
         return ResponseEntity.status(res.status()).body(res);
     }
 }
